@@ -3,9 +3,17 @@ source $VIMRUNTIME/mswin.vim
 behave mswin
 
 " --- vundle -----------------------------------------------------------------
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+  echo "Installing Vundle.."
+  echo ""
+  silent !mkdir -p ~/.vim/bundle
+  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+endif
+
 filetype off
 
-:set rtp+=$HOME\.vim\bundle\vundle
+:set rtp+=$HOME/.vim/bundle/vundle
 :call vundle#rc()
 
 " let Vundle manage Vundle
@@ -16,8 +24,6 @@ Bundle 'gmarik/vundle'
 "Bundle 'Raimondi/delimitMate'
 "Bundle 'Shougo/neocomplcache'
 "Bundle 'Shougo/neocomplcache-snippets-complete'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'eugeneching/consolas-powerline-vim'
 Bundle 'kien/ctrlp.vim'
 "Bundle 'tpope/vim-commentary'
 "Bundle 'tpope/vim-markdown'
@@ -32,8 +38,15 @@ Bundle 'a.vim'
 Bundle 'scratch.vim'
 Bundle 'sqlserver.vim'
 Bundle 'wikipedia.vim'
-Bundle 'TFS'
 Bundle 'altercation/vim-colors-solarized'
+
+if has("win32")
+Bundle 'eugeneching/consolas-powerline-vim'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'TFS'
+else
+Bundle 'bling/vim-airline'
+endif
 
 filetype plugin indent on     " required!
 
@@ -42,24 +55,33 @@ filetype plugin indent on     " required!
 let mapleader = ","
 
 nmap <Leader>bi :source ~/.vimrc<cr>:BundleInstall<cr>
+if has("win32")
 map <Leader>gq :CtrlP c:\stprojects\qos<CR>
 map <Leader>gt :CtrlP c:\workspaces\TCCBased\TCC\Release\RelTMM10.1.0<CR>
+endif
 map <Leader>vi :tabe ~/.vimrc<CR>
 
 " --- powerline --------------------------------------------------------------
 let g:Powerline_symbols = 'fancy'
+let g:airline_powerline_fonts = 1
 
+if has("win32")
 :set viminfo+=n$USERPROFILE\\Documents\\.viminfo
 :set backupdir=$TEMP
 :set directory=$TEMP
+endif
 
-if has("gui")
-  :map <silent> <C-O> :browse confirm e<CR>
+if has("gui_running")
+  if has("gui_gtk2")
+    :map <silent> <C-O> :browse confirm e<CR>
+  endif
 endif
 
 :set guioptions-=T "remove toolbar
 
+if has("win32")
 :nmap ,t :!cd %:p:h && "c:\Program Files\ctags58\ctags.exe" *
+endif
 map <F1> <Esc>
 imap <F1> <Esc>
 nnoremap <silent> <C-l> :nohl<CR><C-l>
@@ -78,8 +100,16 @@ set laststatus=2  " Always show status line.
 :set foldmethod=syntax
 :set foldlevel=99
 :set foldminlines=3
-:set guifont=Consolas\ for\ Powerline\ FixedD:h10
-" :set guifont=Consolas:h10:cANSI 
+if has("gui_running")
+  if has("gui_gtk2")
+    set guifont=Inconsolata\ 12
+  elseif has("gui_macvim")
+    set guifont=Menlo\ Regular:h14
+  elseif has("gui_win32")
+    set guifont=Consolas\ for\ Powerline\ FixedD:h10
+"    set guifont=Consolas:h10:cANSI 
+  endif
+endif
 :set ignorecase
 :set grepprg=grep\ -ns
 :set number
@@ -99,7 +129,9 @@ endif
 
 " :setlocal spell spelllang=en_gb
 
+if has("win32")
 :set tags=./tags,tags,c:\ws\MonitorMaster\core\Main\src\acticore\tags
+endif
 
 let g:alternateExtensions_h = "inl,idh,cpp,c"
 let g:alternateExtensions_hpp = "inl,idh,cpp,c"
@@ -119,10 +151,14 @@ let g:ctrlp_by_filename = 1
 let g:ctrlp_max_depth = 400
 let g:ctrlp_max_files = 50000
 let g:ctrlp_clear_cache_on_exit = 0
+if has("win32")
 set wildignore+=*\\gen\\*,*\\bin\\*,*\\obj\\*,*\\thirdparty\\*,*\\testing\\*,*\\_ReSharper*\\*,*\\TestResults\\*,*\\doc\\*
+endif
 
 set encoding=utf-8
 
 :autocmd BufEnter * silent! lcd %:p:h
 
-:cd c:\stprojects\qos
+if has("win32")
+:cd c:/stprojects/qos
+endif
