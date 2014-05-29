@@ -71,7 +71,7 @@ if has("win32")
 endif
 
 if has("gui_running")
-  if has("gui_gtk2")
+  if has("gui_win32")
     :map <silent> <C-O> :browse confirm e<CR>
   endif
 endif
