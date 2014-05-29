@@ -65,7 +65,6 @@ let g:airline#extensions#tabline#buffer_nr_format = '%s:'
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 if has("win32")
-:set viminfo+=n$USERPROFILE\\Documents\\.viminfo
 :set backupdir=$TEMP
 :set directory=$TEMP
 endif
