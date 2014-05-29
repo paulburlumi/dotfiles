@@ -30,7 +30,7 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'tpope/vim-fugitive'
 "Bundle 'nvie/vim-flake8'
 "Bundle 'matze/dwm.vim'
-Bundle 'fholgado/minibufexpl.vim'
+"Bundle 'fholgado/minibufexpl.vim'
 Bundle 'rbgrouleff/bclose.vim'
 Bundle 'fidian/hexmode'
 " vim-scripts repos
@@ -39,31 +39,30 @@ Bundle 'scratch.vim'
 Bundle 'sqlserver.vim'
 Bundle 'wikipedia.vim'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'bling/vim-airline'
 
 if has("win32")
-Bundle 'eugeneching/consolas-powerline-vim'
-Bundle 'Lokaltog/vim-powerline'
+Bundle 'liangfeng/consolas-font-for-airline'
 Bundle 'TFS'
-else
-Bundle 'bling/vim-airline'
 endif
 
 filetype plugin indent on     " required!
 
 " --- leader -----------------------------------------------------------------
 
-let mapleader = ","
-
 nmap <Leader>bi :source ~/.vimrc<cr>:BundleInstall<cr>
 if has("win32")
 map <Leader>gq :CtrlP c:\stprojects\qos<CR>
-map <Leader>gt :CtrlP c:\workspaces\TCCBased\TCC\Release\RelTMM10.1.0<CR>
+map <Leader>gt :CtrlP c:\workspaces\TCCBased\TCC\Release\RelTMM10.2.0<CR>
 endif
 map <Leader>vi :tabe ~/.vimrc<CR>
 
-" --- powerline --------------------------------------------------------------
-let g:Powerline_symbols = 'fancy'
+" --- airline ----------------------------------------------------------------
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_nr_format = '%s:'
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 if has("win32")
 :set viminfo+=n$USERPROFILE\\Documents\\.viminfo
@@ -106,7 +105,7 @@ if has("gui_running")
   elseif has("gui_macvim")
     set guifont=Menlo\ Regular:h14
   elseif has("gui_win32")
-    set guifont=Consolas\ for\ Powerline\ FixedD:h10
+    set guifont=Powerline\ Consolas:h10
 "    set guifont=Consolas:h10:cANSI 
   endif
 endif
