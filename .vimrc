@@ -98,6 +98,7 @@ set laststatus=2  " Always show status line.
 :set foldmethod=syntax
 :set foldlevel=99
 :set foldminlines=3
+:set backspace=indent,eol,start
 if has("gui_running")
   if has("gui_gtk2")
     set guifont=Inconsolata\ 12
