@@ -87,7 +87,11 @@ nnoremap <C-H> :Hexmode<CR>
 inoremap <C-H> <Esc>:Hexmode<CR>
 vnoremap <C-H> :<C-U>Hexmode<CR>
 
-set laststatus=2  " Always show status line.
+" Switch to alternate file
+:map <C-Tab> :bnext<cr>
+:map <C-S-Tab> :bprevious<cr>
+
+:set laststatus=2  " Always show status line.
 :set wrap
 :set tabstop=8
 :set softtabstop=2
