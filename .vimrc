@@ -163,5 +163,5 @@ set encoding=utf-8
 :autocmd BufEnter * silent! lcd %:p:h
 
 if has("win32")
-:cd c:/workspaces/qos
+:cd c:/workspaces/MonitorMaster/qos/Main
 endif
