@@ -52,7 +52,7 @@ filetype plugin indent on     " required!
 
 nmap <Leader>bi :source ~/.vimrc<cr>:BundleInstall<cr>
 if has("win32")
-map <Leader>gq :CtrlP c:\workspaces\qos<CR>
+map <Leader>gq :CtrlP c:\workspaces\MonitorMaster\qos\Main<CR>
 map <Leader>gt :CtrlP c:\workspaces\TCCBased\TCC\Release\RelTMM10.2.0<CR>
 endif
 map <Leader>vi :tabe ~/.vimrc<CR>
