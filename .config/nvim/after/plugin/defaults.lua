@@ -4,32 +4,15 @@
 -- Above taken from:
 -- https://github.com/nvim-lua/kickstart.nvim
 
--- https://github.com/ChrisAmelia/dotfiles/blob/master/nvim/lua/lsp.lua
-require("lspconfig").gopls.setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = {
-		gopls = {
-			analyses = {
-				unusedparams = true,
-			},
-			staticcheck = true,
-			linksInHover = false,
-			codelenses = {
-				generate = true,
-				gc_details = true,
-				regenerate_cgo = true,
-				tidy = true,
-				upgrade_depdendency = true,
-				vendor = true,
-			},
-			usePlaceholders = true,
-		},
-	},
-})
+-- gopls settings live in lsp/gopls.lua, merged over nvim-lspconfig's defaults.
+-- See `:help lsp-config`
+vim.lsp.enable("gopls")
 
-vim.opt.clipboard = vim.opt.clipboard ^ { "unnamed" }
-vim.opt.clipboard = vim.opt.clipboard ^ { "unnamedplus" }
+-- Kickstart sets clipboard inside vim.schedule, which runs after this file,
+-- so schedule ours too to run after it.
+vim.schedule(function()
+	vim.o.clipboard = "unnamed,unnamedplus"
+end)
 
 vim.keymap.set("", "<C-Tab>", ":bnext<CR>", {})
 vim.keymap.set("", "<C-S-Tab>", ":bprevious<CR>", {})
@@ -49,18 +32,10 @@ vim.keymap.set("i", "kj", "<Esc>`^", { noremap = true })
 -- vim.keymap.set("i", ";lkj", "<Esc>`^:wq<CR>", { noremap = true })
 vim.keymap.set("t", "kj", "<C-\\><C-n>", { noremap = true, desc = "Exit terminal mode" })
 
-vim.api.nvim_exec(
-	[[
+vim.cmd([[
 exe 'inoremap <script> <C-V> <C-G>u' . paste#paste_cmd['i']
 exe 'vnoremap <script> <C-V> ' . paste#paste_cmd['v']
-]],
-	false
-)
-
-require("nvim-treesitter.install").compilers = { "clang" }
-
--- override the default above.
-vim.opt.hlsearch = true
+]])
 
 vim.opt.cmdheight = 0
 
