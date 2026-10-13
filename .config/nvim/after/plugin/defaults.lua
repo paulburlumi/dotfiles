@@ -4,15 +4,15 @@
 -- Above taken from:
 -- https://github.com/nvim-lua/kickstart.nvim
 
--- gopls settings live in lsp/gopls.lua, merged over nvim-lspconfig's defaults.
--- See `:help lsp-config`
-vim.lsp.enable("gopls")
-
--- Kickstart sets clipboard inside vim.schedule, which runs after this file,
--- so schedule ours too to run after it.
-vim.schedule(function()
-	vim.o.clipboard = "unnamed,unnamedplus"
-end)
+-- Kickstart's format_on_save only covers its enabled_filetypes list, which is
+-- empty, so format Go on save here (conform falls back to gopls formatting).
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = vim.api.nvim_create_augroup("format-go-on-save", { clear = true }),
+	pattern = "*.go",
+	callback = function(args)
+		require("conform").format({ bufnr = args.buf, timeout_ms = 500 })
+	end,
+})
 
 vim.keymap.set("", "<C-Tab>", ":bnext<CR>", {})
 vim.keymap.set("", "<C-S-Tab>", ":bprevious<CR>", {})

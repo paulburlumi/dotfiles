@@ -1,4 +1,5 @@
--- Merged over nvim-lspconfig's lsp/gopls.lua (cmd, filetypes, root_markers).
+-- Merged over nvim-lspconfig's lsp/gopls.lua (cmd, filetypes, root_markers);
+-- after/ comes last on the runtimepath, so these settings win.
 -- See `:help lsp-config` and https://go.dev/gopls/settings
 ---@type vim.lsp.Config
 return {
